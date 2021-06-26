@@ -1,5 +1,6 @@
 #!/bin/bash
 
+###### PYTHON #######
 ## Iniciar Venv
 function checar() { #Checa se o venv esta ativo (no caso, o venv TEM de se chamar venv (ou se quiser mudar o nome no script em si) para funcionar)
 	if [[ "$VIRTUAL_ENV" != "" ]];
@@ -8,11 +9,24 @@ function checar() { #Checa se o venv esta ativo (no caso, o venv TEM de se chama
 	else
 		echo "O venv está sendo ativado..."
 		source venv/Scripts/activate
-	fi
-		
+	fi		
 }
 
 ## Iniciar Flask
+function enflask() { #Script principal, vai rodar o flask em modo de desenvolvimento, necessita do parametro start
+	checar # execultar a validação do VENV (Caso não use o VENV, retirar esta linha!)
+	if [ "$1" = 'start' ];
+	then
+		echo "Iniciando o flask... apenas um segundo!"
+		export FLASK_APP=app
+		export FLASK_ENV=development
+		flask run
+		echo 'flask fechado.'
+	else
+		echo "Opção de inicialização não encontrado! tente a opção 'start'!"
+	fi
+}
+
 function enflask() { #Script principal, vai rodar o flask em modo de desenvolvimento, necessita do parametro start
 	checar # execultar a validação do VENV
 	if [ "$1" = 'start' ];
@@ -25,10 +39,9 @@ function enflask() { #Script principal, vai rodar o flask em modo de desenvolvim
 	else
 		echo "Opção de inicialização não encontrado! tente a opção 'start'!"
 	fi
-		
-
 }
 
+###### GIT #######
 ## Commit Simplificado
 function gitrapido() { #Fazer commit com tudo, só necessita da mensagem
 	if (( $# > 1 )); # ter certeza que não foi digitado sem aspas a mensagem
@@ -59,4 +72,6 @@ function gitcriar() { # fazer o primeiro push utilizando um diretório que já t
 		echo "Cancelado"
 	fi	
 }
+
+
 
